@@ -44,8 +44,18 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] corpusLine = corpus.split("\n");
+        String[] corpusLineCompressed = new String[corpusLine.length];
+        String corpusCompressed = corpusLine[0] + "\n";
 
-        return "";
+        for (int i = 1; i < corpusLine.length; i++) {
+            int prefix = longestPrefix(corpusLine[i - 1], corpusLine[i]);
+            String remain = corpusLine[i].substring(prefix);
+            corpusLineCompressed[i] = prefix + " " + remain;
+            corpusCompressed = corpusCompressed + corpusLineCompressed[i] + "\n";
+        }
+        return corpusCompressed;
+
     }
 
     /**
@@ -67,8 +77,21 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] corpusLine = corpus.split("\n");
+        String[] corpusLineDecompressed = new String[corpusLine.length];
+        String corpusDecompressed = corpusLine[0] + "\n";
+        corpusLineDecompressed[0] = corpusLine[0];
 
-        return "";
+        for (int i = 1; i < corpusLine.length; i++) {
+            String[] lineSplit = corpusLine[i].split(" ");
+            int prefixLength = Integer.parseInt(lineSplit[0]);
+            String prefix = corpusLineDecompressed[i - 1].substring(0, prefixLength);
+            String remain = lineSplit[1];
+            corpusLineDecompressed[i] = prefix + remain;
+            corpusDecompressed = corpusDecompressed + corpusLineDecompressed[i] + "\n";
+        }
+        return corpusDecompressed;
+
     }
 
     /**
@@ -82,7 +105,15 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
-        return 0;
+        int count = 0;
+        for (int i = 0; i < firstString.length(); i++) {
+            if (firstString.charAt(i) == secondString.charAt(i)) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
     }
 
     /**
